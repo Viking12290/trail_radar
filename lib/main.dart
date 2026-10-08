@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'services/p2p_service.dart';import 'package:web_socket_channel/web_socket_channel.dart';
+import 'services/p2p_service.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 void main() => runApp(const TrailRadarApp());
@@ -62,14 +64,41 @@ class _EulaScreenState extends State<EulaScreen> {
                   : null,
               child: const Text('Continue to P2P Radar'),
             ),
-          ],
+            SizedBox(height: 20),
+            GestureDetector(
+              onDoubleTap: () async {
+                final Uri url = Uri.parse('https://buymeacoffee.com/Viking12290');
+                if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                  // Fallback if launch fails silently
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.grey[850],
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: Colors.amber.withOpacity(0.6), width: 1),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.coffee, color: Colors.amber, size: 16),
+                    SizedBox(width: 6),
+                    Text(
+                      "Double-tap to support development",
+                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                      ),
+                    ]
+                  ),
+                ),
+              ),
+	    ]
+	  ),
         ),
-      ),
-    );
+      );
+    }
   }
-}
-
-class ChatMessage {
+  class ChatMessage {
   final String text;
   final bool isMe;
   final DateTime timestamp;
